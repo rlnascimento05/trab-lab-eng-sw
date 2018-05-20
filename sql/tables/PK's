@@ -1,0 +1,6 @@
+CONSTRAINT pk_Funcionario        PRIMARY KEY (CPF),
+CONSTRAINT pk_Cliente            PRIMARY KEY (CPF),
+CONSTRAINT pk_Pedido             PRIMARY KEY (CodPedido),
+CONSTRAINT pk_Pagamento          PRIMARY KEY (CodPagamento),
+CONSTRAINT pk_Medicamento        PRIMARY KEY (CodMedicamento),
+CONSTRAINT pk_Cosmeticos         PRIMARY KEY (CodCosmeticos)
