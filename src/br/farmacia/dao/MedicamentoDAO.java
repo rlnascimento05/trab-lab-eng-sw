@@ -133,7 +133,6 @@ public class MedicamentoDAO {
 			//TODO: Colocar os campos certos para o medicamento.
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
