@@ -9,7 +9,7 @@ public abstract class Produto {
 	protected String descricao;
 	protected double valor;
 	protected double peso;
-	protected SimpleDateFormat validade; //TODO: Trocar isso pra date time;
+	protected SimpleDateFormat validade;
 	public String getNome() {
 		return nome;
 	}

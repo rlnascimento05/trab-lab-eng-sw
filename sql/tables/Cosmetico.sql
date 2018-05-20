@@ -1,4 +1,4 @@
-CREATE TABLE Cosmeticos(
+CREATE TABLE Cosmetico(
 	CodCosmetico INT,
 	NomeProduto CHAR(100),
 	TipoProduto CHAR(100),
