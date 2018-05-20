@@ -13,5 +13,5 @@ CREATE TABLE Medicamento(
 	Tarja BOOLEAN,
 	ContraIndicacao CHAR(255),
 	ReacoesAdversas CHAR(255),
-	Percacoes CHAR(225)
+	Precaucoes CHAR(225)
 );

@@ -1,5 +1,7 @@
 package br.farmacia.modelo;
 
+import java.text.SimpleDateFormat;
+
 public abstract class Produto {
 	protected String nome;
 	protected String tipo;
@@ -7,7 +9,7 @@ public abstract class Produto {
 	protected String descricao;
 	protected double valor;
 	protected double peso;
-	protected int validade; //TODO: Trocar isso pra date time;
+	protected SimpleDateFormat validade; //TODO: Trocar isso pra date time;
 	public String getNome() {
 		return nome;
 	}
@@ -44,10 +46,10 @@ public abstract class Produto {
 	public void setPeso(double peso) {
 		this.peso = peso;
 	}
-	public int getValidade() {
+	public SimpleDateFormat getValidade() {
 		return validade;
 	}
-	public void setValidade(int validade) {
+	public void setValidade(SimpleDateFormat validade) {
 		this.validade = validade;
 	}
 }

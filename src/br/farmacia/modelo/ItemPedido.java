@@ -1,6 +1,6 @@
 package br.farmacia.modelo;
 
-public class ItemProduto {
+public class ItemPedido {
 	private Produto item;
 	private int quantidade;
 	

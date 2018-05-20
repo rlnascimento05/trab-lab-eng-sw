@@ -1,7 +1,7 @@
 package br.farmacia.modelo;
 
 public class Pedido {
-	private ItemProduto[] itensComprados;
+	private ItemPedido[] itensComprados;
 	private int cpfCliente; 
 		//TODO: Como essa relação sai do diagrama de classes e vira codigo.
 	
@@ -9,7 +9,7 @@ public class Pedido {
 	
 	public double valorTotal(){
 		double result = 0;
-		for(ItemProduto item : itensComprados){
+		for(ItemPedido item : itensComprados){
 			result += item.valor();
 		}
 		
