@@ -7,5 +7,3 @@ CREATE TABLE Funcionario(
 	Celular INT,
 	Telefone INT
 );
-
---' TODO: Foreign keys e Primary Keys
