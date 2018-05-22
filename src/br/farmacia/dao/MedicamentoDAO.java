@@ -6,14 +6,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import br.farmacia.database.ConnectionFactory;
+import br.farmacia.database.DatabaseConfig;
 import br.farmacia.modelo.Medicamento;
 
 public class MedicamentoDAO {
+	private ConnectionFactory connector;
+
+	public MedicamentoDAO(DatabaseConfig config){
+		this.connector = new ConnectionFactory(config);
+	}
+
     public int insert(Medicamento medicamento){
         PreparedStatement ps;
         int returnCode = 0;
 
-        try (Connection conn = new ConnectionFactory().getConnection()) {
+        try (Connection conn = this.connector.getConnection()) {
             ps = (PreparedStatement) conn.prepareStatement(
 
                     "insert into medicamento("
@@ -59,7 +66,7 @@ public class MedicamentoDAO {
     public int delete(Medicamento medicamento) {
         java.sql.PreparedStatement ps;
         int returnCode = 0;
-        try (Connection conn = new ConnectionFactory().getConnection()) {
+        try (Connection conn = this.connector.getConnection()) {
             ps= conn.prepareStatement ("delete from Medicamento where CodMedicamento = ?");
             ps.setInt(1, medicamento.getCodMedicamento());
             returnCode = ps.executeUpdate();
@@ -73,7 +80,7 @@ public class MedicamentoDAO {
     public int update(Medicamento medicamento){
         java.sql.PreparedStatement ps;
         int returnCode = 0;
-        try (Connection conn = new ConnectionFactory().getConnection()) {
+        try (Connection conn = this.connector.getConnection()) {
             ps= conn.prepareStatement (
                 "update Medicamento set "
                 + "CodMedicamento = ?, "
@@ -125,7 +132,7 @@ public class MedicamentoDAO {
 
     public Medicamento getMedicamento(int idMedicamento){
         java.sql.PreparedStatement ps;
-        try (Connection conn = new ConnectionFactory().getConnection()) {
+        try (Connection conn = this.connector.getConnection()) {
             ps= conn.prepareStatement ("update Medicamento set coisas_de_medicamento = ?  where idMedicamento = ?");
 //			ps.setInt(-1);
             //TODO: Aqui eu tenho que colocar o idMedicamento como ultimo pra poder

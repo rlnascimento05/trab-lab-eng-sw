@@ -1,6 +1,8 @@
 package br.farmacia.database;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class ConnectionFactory {
     String url;
@@ -15,13 +17,9 @@ public class ConnectionFactory {
         this.senha = config.getSenha();
     }
 
-    public ConnectionFactory(){
-        //TODO: This shit
-    }
-
-    public Connection getConnection(){
+	public Connection getConnection(){
         try {
-            Class.forName(driver);
+            Class.forName(this.driver);
             return (Connection) DriverManager.getConnection(this.url,this.usuario,this.senha);
             }
         catch (SQLException e){

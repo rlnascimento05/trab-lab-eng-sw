@@ -5,14 +5,21 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import br.farmacia.database.ConnectionFactory;
+import br.farmacia.database.DatabaseConfig;
 import br.farmacia.modelo.Cliente;
 
 public class ClienteDAO {
+	private ConnectionFactory connector;
+
+	public ClienteDAO(DatabaseConfig config){
+		this.connector = new ConnectionFactory(config);
+	}
+
     public int insert(Cliente cliente){
         PreparedStatement ps;
         int returnCode = 0;
 
-        try (Connection conn = new ConnectionFactory().getConnection()) {
+        try (Connection conn = this.connector.getConnection()) {
             ps = (PreparedStatement) conn.prepareStatement(
 
                     "insert into cliente("
@@ -43,7 +50,7 @@ public class ClienteDAO {
     public int delete(Cliente cliente) {
         java.sql.PreparedStatement ps;
         int returnCode = 0;
-        try (Connection conn = new ConnectionFactory().getConnection()) {
+        try (Connection conn = this.connector.getConnection()) {
             ps= conn.prepareStatement ("delete from Cliente where CodMedicamento = ?");
             ps.setInt(1, cliente.getCpf());
             returnCode = ps.executeUpdate();
@@ -57,7 +64,7 @@ public class ClienteDAO {
     public int update(Cliente cliente){
         java.sql.PreparedStatement ps;
         int returnCode = 0;
-        try (Connection conn = new ConnectionFactory().getConnection()) {
+        try (Connection conn = this.connector.getConnection()) {
             ps = (PreparedStatement) conn.prepareStatement(
                 "update cliente set"
                 + "Nome = ?, "
