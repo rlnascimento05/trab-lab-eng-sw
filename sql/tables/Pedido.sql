@@ -1,5 +1,5 @@
 CREATE TABLE Pedido(
 	CodPedido INT,
 	NomeProduto CHAR(100),
-	ValorPoduto DOUBLE
+	ValorPoduto NUMBER(10,2)
 );

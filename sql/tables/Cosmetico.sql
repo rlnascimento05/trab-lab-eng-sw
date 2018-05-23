@@ -4,7 +4,7 @@ CREATE TABLE Cosmetico(
 	TipoProduto CHAR(100),
 	Fabricante VARCHAR (100),
 	Descricao VARCHAR(255),
-	Valor DOUBLE,
+	Valor NUMBER(10,3),
 	Peso INT,
 	Validade DATE,
 	Marca CHAR(255),

@@ -1,4 +1,4 @@
 CREATE TABLE Pagamento(
 	CodPagamento INT,
-	ValorTotal DOUBLE
+	ValorTotal NUMBER(10,2)
 );
