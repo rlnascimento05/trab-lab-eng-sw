@@ -2,6 +2,7 @@ package br.farmacia.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -10,11 +11,11 @@ import br.farmacia.database.DatabaseConfig;
 import br.farmacia.modelo.Medicamento;
 
 public class MedicamentoDAO {
-	private ConnectionFactory connector;
+    private ConnectionFactory connector;
 
-	public MedicamentoDAO(DatabaseConfig config){
-		this.connector = new ConnectionFactory(config);
-	}
+    public MedicamentoDAO(DatabaseConfig config){
+        this.connector = new ConnectionFactory(config);
+    }
 
     public int insert(Medicamento medicamento){
         PreparedStatement ps;
@@ -37,7 +38,7 @@ public class MedicamentoDAO {
                     + "Tarja, "
                     + "ContraIndicacao, "
                     + "ReacoesAdversas, "
-                    + "Precaucoes"
+                    + "Precaucoes) "
                     + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             ps.setInt(1, medicamento.getCodMedicamento());
@@ -54,6 +55,7 @@ public class MedicamentoDAO {
             ps.setString(12,medicamento.getContraIndicacao());
             ps.setString(13, medicamento.getReacaoAdversa());
             ps.setString(14,medicamento.getPrecaucoes());
+
             returnCode = ps.executeUpdate();
 
             ps.close();
@@ -131,22 +133,46 @@ public class MedicamentoDAO {
     }
 
     public Medicamento getMedicamento(int idMedicamento){
+    	Medicamento med = null;
         java.sql.PreparedStatement ps;
         try (Connection conn = this.connector.getConnection()) {
-            ps= conn.prepareStatement ("update Medicamento set coisas_de_medicamento = ?  where idMedicamento = ?");
-//			ps.setInt(-1);
-            //TODO: Aqui eu tenho que colocar o idMedicamento como ultimo pra poder
-            // dar o update certo
-            //TODO: Colocar os campos certos para o medicamento.
-            ps.executeUpdate();
+            ps= conn.prepareStatement ("select * from medicamento where CodMedicamento = ?");
+			ps.setInt(1,idMedicamento);
+
+			ResultSet result = ps.getResultSet();
+
+			ArrayList<Medicamento> medicamentos = buildMedicamentos(result);
+			med = medicamentos.get(0);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        //TODO: Colocar aqui como fazer pra construir o objeto medicamento apartir
-        // dos resultados da query
-        return null;
+        return med;
     }
+
+    private ArrayList<Medicamento> buildMedicamentos(ResultSet result) throws SQLException{
+    	ArrayList<Medicamento> meds = new ArrayList<Medicamento>();
+    	while (result.next()){
+    		Medicamento med = new Medicamento();
+    		med.setCodMedicamento(result.getInt("CodMedicamento"));
+    		med.setNome(result.getString("NomeProduto"));
+    		med.setTipo(result.getString("TipoProduto"));
+    		med.setFabricante(result.getString("Fabricante"));
+    		med.setValor(result.getDouble("Valor"));
+    		med.setPeso(result.getDouble("Peso"));
+    		med.setValidade(result.getDate("Validade"));
+    		med.setQtdCapsula(result.getInt("QtdCapsula"));
+    		med.setGenerico(result.getBoolean("Generico")); //FIXME: this may break, fix later
+    		med.setPrincipioAtivo(result.getString("PrincipioAtivo"));
+    		med.setTarja(result.getString("Tarja"));
+    		med.setContraIndicacao(result.getString("ContraIndicacao"));
+    		med.setReacaoAdversa(result.getString("ReacoesAdversas"));
+    		med.setPrecaucoes(result.getString("Precaucoes"));
+
+    		meds.add(med);
+    	}
+    	return meds;
+    }
+
 
     public ArrayList<Medicamento> getAllMedicamentos(){
         //TODO: Finish this thing
