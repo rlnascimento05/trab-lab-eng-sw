@@ -137,12 +137,12 @@ public class MedicamentoDAO {
         java.sql.PreparedStatement ps;
         try (Connection conn = this.connector.getConnection()) {
             ps= conn.prepareStatement ("select * from medicamento where CodMedicamento = ?");
-			ps.setInt(1,idMedicamento);
+            ps.setInt(1,idMedicamento);
 
-			ResultSet result = ps.getResultSet();
+            ResultSet result = ps.getResultSet();
 
-			ArrayList<Medicamento> medicamentos = buildMedicamentos(result);
-			med = medicamentos.get(0);
+            ArrayList<Medicamento> medicamentos = buildMedicamentos(result);
+            med = medicamentos.get(0);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -150,27 +150,27 @@ public class MedicamentoDAO {
     }
 
     private ArrayList<Medicamento> buildMedicamentos(ResultSet result) throws SQLException{
-    	ArrayList<Medicamento> meds = new ArrayList<Medicamento>();
-    	while (result.next()){
-    		Medicamento med = new Medicamento();
-    		med.setCodMedicamento(result.getInt("CodMedicamento"));
-    		med.setNome(result.getString("NomeProduto"));
-    		med.setTipo(result.getString("TipoProduto"));
-    		med.setFabricante(result.getString("Fabricante"));
-    		med.setValor(result.getDouble("Valor"));
-    		med.setPeso(result.getDouble("Peso"));
-    		med.setValidade(result.getDate("Validade"));
-    		med.setQtdCapsula(result.getInt("QtdCapsula"));
-    		med.setGenerico(result.getBoolean("Generico")); //FIXME: this may break, fix later
-    		med.setPrincipioAtivo(result.getString("PrincipioAtivo"));
-    		med.setTarja(result.getString("Tarja"));
-    		med.setContraIndicacao(result.getString("ContraIndicacao"));
-    		med.setReacaoAdversa(result.getString("ReacoesAdversas"));
-    		med.setPrecaucoes(result.getString("Precaucoes"));
+        ArrayList<Medicamento> meds = new ArrayList<Medicamento>();
+        while (result.next()){
+            Medicamento med = new Medicamento();
+            med.setCodMedicamento(result.getInt("CodMedicamento"));
+            med.setNome(result.getString("NomeProduto"));
+            med.setTipo(result.getString("TipoProduto"));
+            med.setFabricante(result.getString("Fabricante"));
+            med.setValor(result.getDouble("Valor"));
+            med.setPeso(result.getDouble("Peso"));
+            med.setValidade(result.getDate("Validade"));
+            med.setQtdCapsula(result.getInt("QtdCapsula"));
+            med.setGenerico(result.getBoolean("Generico")); //FIXME: this may break, fix later
+            med.setPrincipioAtivo(result.getString("PrincipioAtivo"));
+            med.setTarja(result.getString("Tarja"));
+            med.setContraIndicacao(result.getString("ContraIndicacao"));
+            med.setReacaoAdversa(result.getString("ReacoesAdversas"));
+            med.setPrecaucoes(result.getString("Precaucoes"));
 
-    		meds.add(med);
-    	}
-    	return meds;
+            meds.add(med);
+        }
+        return meds;
     }
 
 
