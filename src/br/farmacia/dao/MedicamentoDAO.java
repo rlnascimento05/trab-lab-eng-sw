@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import br.farmacia.database.ConnectionFactory;
@@ -136,10 +137,10 @@ public class MedicamentoDAO {
     	Medicamento med = null;
         java.sql.PreparedStatement ps;
         try (Connection conn = this.connector.getConnection()) {
-            ps= conn.prepareStatement ("select * from medicamento where CodMedicamento = ?");
+        	ps = conn.prepareStatement ("select * from medicamento where CodMedicamento = ?");
             ps.setInt(1,idMedicamento);
 
-            ResultSet result = ps.getResultSet();
+            ResultSet result = ps.executeQuery();
 
             ArrayList<Medicamento> medicamentos = buildMedicamentos(result);
             med = medicamentos.get(0);
