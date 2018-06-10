@@ -14,7 +14,19 @@ public class Medicamento extends Produto {
         // TODO Construtor
     }
 
-    public int getCodMedicamento() {
+    public Medicamento(int codMedicamento, int qtdCapsula, boolean generico, String principioAtivo, String tarja,
+         String contraIndicacao, String reacaoAdversa, String precaucoes) {
+		this.codMedicamento = codMedicamento;
+		this.qtdCapsula = qtdCapsula;
+		this.generico = generico;
+		this.principioAtivo = principioAtivo;
+		this.tarja = tarja;
+		this.contraIndicacao = contraIndicacao;
+		this.reacaoAdversa = reacaoAdversa;
+		this.precaucoes = precaucoes;
+	}
+
+	public int getCodMedicamento() {
         return codMedicamento;
     }
 

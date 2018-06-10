@@ -1,0 +1,11 @@
+package br.farmacia.unittest;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
+
+@RunWith(Suite.class)
+@SuiteClasses({DatabaseTest.class, MedicamentoTest.class})
+public class AllTests {
+
+}

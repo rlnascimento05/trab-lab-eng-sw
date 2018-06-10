@@ -8,16 +8,15 @@ import br.farmacia.database.ConnectionFactory;
 import br.farmacia.database.DatabaseConfig;
 
 public class DatabaseTest {
-	@Test
-	public void test_conection() {
-		// cenario
-		DatabaseConfig config = new  DatabaseConfig();
+    @Test
+    public void test_conection() {
+        // cenario
+        DatabaseConfig config = new  DatabaseConfig();
 
-		// acao
-		ConnectionFactory connectionFactory = new ConnectionFactory(config);
+        // acao
+        ConnectionFactory connectionFactory = new ConnectionFactory(config);
 
-		// verificacao
-		assertNotNull(connectionFactory.getConnection());
-	}
-
+        // verificacao
+        assertNotNull(connectionFactory.getConnection());
+    }
 }
