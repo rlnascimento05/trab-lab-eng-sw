@@ -3,7 +3,9 @@ package br.farmacia.unittest;
 import static org.junit.Assert.*;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 
 import br.farmacia.dao.MedicamentoDAO;
@@ -11,55 +13,50 @@ import br.farmacia.database.DatabaseConfig;
 import br.farmacia.modelo.Medicamento;
 
 public class MedicamentoTest {
-    private MedicamentoDAO dao = new MedicamentoDAO(new DatabaseConfig());
+    private static MedicamentoDAO dao = new MedicamentoDAO(new DatabaseConfig());
+    private static ObtemMedicamento medicamentos = new ObtemMedicamento();
 
+    @Test
     public void test_insert(){
-        Medicamento med = new Medicamento();
-        med.setCodMedicamento(12);
-        med.setContraIndicacao("Nenhuma");
-        med.setDescricao("25 capsulas");
-        med.setFabricante("Bayer");
-        med.setNome("Decrepitax");
-        med.setPeso(32);
-        med.setPrecaucoes("Teste");
-        med.setPrincipioAtivo("Vacilo");
-        med.setQtdCapsula(25);
-        med.setReacaoAdversa("Humanos");
-        med.setTarja("1"); 	//aqui o tamanho é 1 no banco de dados
-                               // aumentar isso no banco ou criar uma tabela de relação de tarjas ou
-                            // colocar essa logica aqui.
-        med.setTipo("2");
-        med.setValidade(new Date(27, 8, 2018));
-        med.setValor(100);
+    	Medicamento med1 = medicamentos.getMed1();
+        Medicamento med2 = medicamentos.getMed2();
 
-        assertEquals(dao.insert(med),1);
+        ArrayList<Medicamento> meds = new ArrayList<Medicamento>();
+        meds.add(med1);
+        meds.add(med2);
+
+        assertEquals(dao.insert(meds),2);
     }
 
     @Test
     public void test_select(){
-    	 Medicamento med = new Medicamento(); //TODO: Refactor this shit
-         med.setCodMedicamento(12);
-         med.setContraIndicacao("Nenhuma");
-         med.setDescricao("25 capsulas");
-         med.setFabricante("Bayer");
-         med.setNome("Decrepitax");
-         med.setPeso(32);
-         med.setPrecaucoes("Teste");
-         med.setPrincipioAtivo("Vacilo");
-         med.setQtdCapsula(25);
-         med.setReacaoAdversa("Humanos");
-         med.setTarja("1"); 	//aqui o tamanho é 1 no banco de dados
-                                // aumentar isso no banco ou criar uma tabela de relação de tarjas ou
-                             // colocar essa logica aqui.
-         med.setTipo("2");
-         med.setValidade(new Date(27, 8, 2018));
-         med.setValor(100);
+        Medicamento med = medicamentos.getMed1();
+        int cod = med.getCodMedicamento();
 
-         int cod = 12;
+        Medicamento databaseMed = dao.getMedicamento(cod);
 
-         Medicamento databaseMed = dao.getMedicamento(cod);
-
-         assertTrue(databaseMed.getNome() == med.getNome());
-
+        assertTrue(databaseMed.getNome().equals(med.getNome()));
     }
+
+    @Test
+    public void test_delete(){
+        dao.delete(medicamentos.getMed1());
+        dao.delete(medicamentos.getMed2());
+    }
+
+    @Test
+    public void test_update(){
+        Medicamento med = medicamentos.getMed1();
+        med.setNome("OutroNome");
+        med.setFabricante("OutroFabricante");
+
+        assertEquals(dao.update(med),1);
+    }
+
+
+    @AfterClass
+	public static void tearDownAfterClass() throws Exception {
+    	dao.delete(medicamentos.getMed1());
+    	dao.delete(medicamentos.getMed2());
+	}
 }

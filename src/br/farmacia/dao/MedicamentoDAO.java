@@ -59,12 +59,22 @@ public class MedicamentoDAO {
 
             returnCode = ps.executeUpdate();
 
+            conn.close();
             ps.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return returnCode;
     }
+
+    public int insert(ArrayList<Medicamento> medicamentos){
+    	int returnCode = 0;
+    	for(Medicamento med : medicamentos){
+    		returnCode += this.insert(med);
+    	}
+		return returnCode;
+    }
+
 
     public int delete(Medicamento medicamento) {
         java.sql.PreparedStatement ps;
@@ -73,6 +83,8 @@ public class MedicamentoDAO {
             ps= conn.prepareStatement ("delete from Medicamento where CodMedicamento = ?");
             ps.setInt(1, medicamento.getCodMedicamento());
             returnCode = ps.executeUpdate();
+            conn.close();
+            ps.close();
         }
         catch (SQLException e){
             throw new RuntimeException(e);
@@ -100,7 +112,7 @@ public class MedicamentoDAO {
                 + "ContraIndicacao = ?, "
                 + "ReacoesAdversas = ?, "
                 + "Precaucoes = ?"
-                + "where idMedicamento = ?");
+                + "where CodMedicamento = ?");
 
             ps.setInt(1, medicamento.getCodMedicamento());
             ps.setString(2, medicamento.getNome());
@@ -118,11 +130,13 @@ public class MedicamentoDAO {
             ps.setString(14,medicamento.getPrecaucoes());
             ps.setInt(15, medicamento.getCodMedicamento());
             returnCode = ps.executeUpdate();
+
+            conn.close();
+            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return returnCode;
-
     }
 
     public int update(Medicamento[] medicamentos){
@@ -144,6 +158,9 @@ public class MedicamentoDAO {
 
             ArrayList<Medicamento> medicamentos = buildMedicamentos(result);
             med = medicamentos.get(0);
+
+            conn.close();
+            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -155,22 +172,23 @@ public class MedicamentoDAO {
         while (result.next()){
             Medicamento med = new Medicamento();
             med.setCodMedicamento(result.getInt("CodMedicamento"));
-            med.setNome(result.getString("NomeProduto"));
-            med.setTipo(result.getString("TipoProduto"));
-            med.setFabricante(result.getString("Fabricante"));
+            med.setNome(result.getString("NomeProduto").trim());
+            med.setTipo(result.getString("TipoProduto").trim());
+            med.setFabricante(result.getString("Fabricante").trim());
             med.setValor(result.getDouble("Valor"));
             med.setPeso(result.getDouble("Peso"));
             med.setValidade(result.getDate("Validade"));
             med.setQtdCapsula(result.getInt("QtdCapsula"));
             med.setGenerico(result.getBoolean("Generico")); //FIXME: this may break, fix later
-            med.setPrincipioAtivo(result.getString("PrincipioAtivo"));
-            med.setTarja(result.getString("Tarja"));
-            med.setContraIndicacao(result.getString("ContraIndicacao"));
-            med.setReacaoAdversa(result.getString("ReacoesAdversas"));
-            med.setPrecaucoes(result.getString("Precaucoes"));
+            med.setPrincipioAtivo(result.getString("PrincipioAtivo").trim());
+            med.setTarja(result.getString("Tarja").trim());
+            med.setContraIndicacao(result.getString("ContraIndicacao").trim());
+            med.setReacaoAdversa(result.getString("ReacoesAdversas").trim());
+            med.setPrecaucoes(result.getString("Precaucoes").trim());
 
             meds.add(med);
         }
+
         return meds;
     }
 
