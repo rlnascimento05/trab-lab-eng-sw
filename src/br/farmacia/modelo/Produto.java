@@ -3,6 +3,7 @@ package br.farmacia.modelo;
 import java.sql.Date;
 
 public abstract class Produto {
+    protected int codProduto;
     protected String nome;
     protected String tipo;
     protected String fabricante;
@@ -10,6 +11,15 @@ public abstract class Produto {
     protected double valor;
     protected double peso;
     protected Date validade;
+    
+    public int getCodProduto(){
+        return codProduto;
+    }
+    
+    public void setCodProduto(int cod){
+        this.codProduto = cod;
+    }
+    
     public String getNome() {
         return nome;
     }

@@ -1,5 +1,5 @@
 create table Produto(
-	codproduto int;
+	CodProduto int;
 	Nome char(200);
 	Tipo char(200);
 	Fabricante char(200);

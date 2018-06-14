@@ -24,22 +24,37 @@ public class PedidoDAO {
         int returnCode = 0;
 	
         try (Connection conn = this.connector.getConnection()) {
+            ps = (PreparedStatement) conn.prepareStatement(
+                    "insert into pedido("
+                    + "CodPedido, "
+                    + "CpfCliente,"
+                    + "DataPedido) "
+                    + "values(?,?,?)");
+        	
+            ps.setInt(1,pedido.getCodPedido());
+            ps.setInt(1,pedido.getCpfCliente());
+            ps.setDate(1,pedido.getDataPedido());
+        	
+            returnCode += ps.executeUpdate();
+            ps.close();
+            
         	for(ItemPedido item : pedido.getItensComprados()){
         		ps = (PreparedStatement) conn.prepareStatement(
-
-                        "insert into pedido("
-                        + "CodPedido, "
-                        + "DataPedido) "
-                        + "values(?,?,?)");
+                    "insert into ItemPedido("
+                     + "CodPedido, "
+                     + "CodProduto,"
+                     + "Quantidade) "
+                     + "values(?,?,?)");
 
                 ps.setInt(1, pedido.getCodPedido());
-    			ps.setData(2, pedido.getDataPedido());
+                ps.setInt(2, item.getItem().getCodProduto());
+                ps.setInt(3, item.getQuantidade());
 
-                returnCode = ps.executeUpdate();
+                returnCode += ps.executeUpdate();
+                ps.close();
         	}
 
             conn.close();
-            ps.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -71,39 +86,10 @@ public class PedidoDAO {
         return returnCode;
     }
 
-    public int update(Pedido pedido){
-        java.sql.PreparedStatement ps;
-        int returnCode = 0;
-        try (Connection conn = this.connector.getConnection()) {
-            ps= conn.prepareStatement (
-                "update Pedido set "
-                    + "CodPedido, "
-					+ "Produtos, "
-                    + "DataPedido) "
-                    + "values(?,?,?)");
-
-            ps.setInt(1, pedido.getCodPedido());
-            ps.setInt(2, pedido.getProdutos());//ARRAY CARALHO
-			ps.setInt(3, pedido.getDataPedido());//É DATE MAS NEM SEI COMOFAS
-            returnCode = ps.executeUpdate();
-
-            conn.close();
-            ps.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return returnCode;
-    }
-
-    public int update(Pedido[] pedidos){
-        int returnCode = 0;
-        for (Pedido pedido : pedidos){
-            returnCode +=this.update(pedido);
-        }
-        return returnCode;
-    }
-
-    public Pedido getPedido(int idPedido){
+    //Eu acho que esse cara n�o precisa de update;
+    
+    public Pedido getPedido(int idPedido){ //TODO: Mudar esse cara.
+    	//TODO: Implement this
     	Pedido ped = null;
         java.sql.PreparedStatement ps;
         try (Connection conn = this.connector.getConnection()) {
@@ -120,26 +106,17 @@ public class PedidoDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return ped;
+        return null;
     }
 
     private ArrayList<Pedido> buildPedidos(ResultSet result) throws SQLException{
-        ArrayList<Pedido> peds = new ArrayList<Pedido>();
-        while (result.next()){
-            Pedido ped = new Pedido();
-            ped.setCodPedido(result.getInt("CodPedido"));           
-            ped.setProdutos(result.getInt("Produtos"));//ARRAY CARALHO
-			ped.setDataPedido(result.getInt("DataPedido"));//É DATE MAS NEM SEI COMOFAS
-
-            peds.add(ped);
-        }
-
-        return peds;
+    	//TODO: Implement this
+        return null;
     }
 
 
     public ArrayList<Pedido> getAllPedidos(){
-        //TODO: Finish this thing
+        //TODO: Finish this
         java.sql.PreparedStatement ps;
         return null;
     }

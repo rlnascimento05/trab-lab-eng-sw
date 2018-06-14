@@ -11,7 +11,7 @@ import br.farmacia.database.ConnectionFactory;
 import br.farmacia.database.DatabaseConfig;
 import br.farmacia.modelo.Cliente;
 
-public class ClienteDAO {
+public class ClienteDAO { //TODO: unittest
 	private ConnectionFactory connector;
 
 	public ClienteDAO(DatabaseConfig config){
