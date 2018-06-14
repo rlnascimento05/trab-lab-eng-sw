@@ -79,11 +79,13 @@ public class PedidoDAO {
                     + "CodPedido, "
 					+ "Produtos, "
                     + "DataPedido) "
-                    + "values(?,?,?)");
+                    + "where CodPedido = ?");
 
             ps.setInt(1, pedido.getCodPedido());
             ps.setInt(2, pedido.getProdutos());//ARRAY CARALHO
 			ps.setInt(3, pedido.getDataPedido());//É DATE MAS NEM SEI COMOFAS
+		ps.setInt(4, pedido.getCodPedido());
+		
             returnCode = ps.executeUpdate();
 
             conn.close();
