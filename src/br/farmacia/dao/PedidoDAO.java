@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import br.farmacia.database.ConnectionFactory;
 import br.farmacia.database.DatabaseConfig;
+import br.farmacia.modelo.ItemPedido;
 import br.farmacia.modelo.Pedido;
 
 public class PedidoDAO {
@@ -23,19 +24,19 @@ public class PedidoDAO {
         int returnCode = 0;
 	
         try (Connection conn = this.connector.getConnection()) {
-            ps = (PreparedStatement) conn.prepareStatement(
+        	for(ItemPedido item : pedido.getItensComprados()){
+        		ps = (PreparedStatement) conn.prepareStatement(
 
-                    "insert into pedido("
-                    + "CodPedido, "
-					+ "Produtos, "
-                    + "DataPedido) "
-                    + "values(?,?,?)");
+                        "insert into pedido("
+                        + "CodPedido, "
+                        + "DataPedido) "
+                        + "values(?,?,?)");
 
-            ps.setInt(1, pedido.getCodPedido());
-            ps.setInt(2, pedido.getProdutos());//ARRAY CARALHO
-			ps.setInt(3, pedido.getDataPedido());//É DATE MAS NEM SEI COMOFAS
+                ps.setInt(1, pedido.getCodPedido());
+    			ps.setData(2, pedido.getDataPedido());
 
-            returnCode = ps.executeUpdate();
+                returnCode = ps.executeUpdate();
+        	}
 
             conn.close();
             ps.close();

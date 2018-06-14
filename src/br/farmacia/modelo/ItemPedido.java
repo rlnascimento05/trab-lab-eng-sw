@@ -8,5 +8,20 @@ public class ItemPedido {
         return this.item.getValor() * quantidade;
     }
 
-    //TODO: Getters and Setters
+	public Produto getItem() {
+		return item;
+	}
+
+	public void setItem(Produto item) {
+		this.item = item;
+	}
+
+	public int getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+    
 }
