@@ -85,7 +85,7 @@ public class PagamentoDAO {
 					+ "Desconto, "
 					+ "Tipo, "
 					+ "DataPagamento) "
-                    + "values(?,?)");
+                    + "where CodPagamento = ?");
 
             ps.setInt(1, pagamento.getCodPagamento());
             ps.setDouble(2, pagamento.getValorTotal());//Nao sei se esta certo(O setDouble)
