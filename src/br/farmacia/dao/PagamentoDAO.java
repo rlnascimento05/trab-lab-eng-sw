@@ -38,7 +38,8 @@ public class PagamentoDAO {
 			ps.setDouble(3, pagamento.getDesconto());//Nao sei se esta certo(O setDouble)
 			ps.setBoolean(4, pagamento.getTipo());//Nao sei se esta certo(O setBoolean)
 			ps.setInt(5, pagamento.getDataPagamento());//Aqui e Date mas nao sei comofas
-
+			ps.setInt(6, pagamento.getCodPagamento());
+		
             returnCode = ps.executeUpdate();
 
             conn.close();
