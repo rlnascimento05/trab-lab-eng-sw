@@ -85,11 +85,10 @@ public class PedidoDAO {
         }
         return returnCode;
     }
-
-    //Eu acho que esse cara não precisa de update;
+    
+    //Eu acho que a gente não precisa de update
     
     public Pedido getPedido(int idPedido){ //TODO: Mudar esse cara.
-    	//TODO: Implement this
     	Pedido ped = null;
         java.sql.PreparedStatement ps;
         try (Connection conn = this.connector.getConnection()) {
